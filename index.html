@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>BlackJack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<link rel="icon" type="image/x-icon" href="three-cards-svgrepo-com.svg">-->
+    <!--<link rel="icon" href="three-cards-svgrepo-com.svg" sizes="any" type="image/svg+xml">-->
+    <link rel="icon" href="ace-of-spades-svgrepo-com.svg" sizes="any" type="image/svg+xml">
+    <link rel="icon" href="ace-of-spades-svgrepo-com.ico" sizes="any">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+          font-family: "Dela Gothic One", sans-serif;
+          font-weight: 400;
+          font-style: normal;
+        }
+    </style>
+
+    <script>
+    cards = []
+    document.addEventListener('alpine:init', () => {
+        // Alpine.data(...)
+        init()
+    })
+    document.addEventListener('alpine:initialized', () => {
+        //init()
+    })
+    function init() {
+
+        shares = [
+            { "ticker": "AAPL", "name": "Apple", "margin": 66, "suit": "hearts", "image": "cards/jack_of_hearts2.svg" },
+            { "ticker": "MSFT", "name": "Microsoft", "margin": 32, "suit": "spades", "image": "cards/5_of_clubs.svg" },
+            { "ticker": "SBER", "name": "Сбербанк", "margin": 106, "suit": "diamonds", "image": "cards/jack_of_spades.svg" },
+            { "ticker": "GAZP", "name": "Газпром", "margin": -8, "suit": "diamonds", "image": "cards/4_of_hearts.svg" },
+            { "ticker": "MTSS", "name": "МТС", "margin": 15, "suit": "diamonds", "image": "cards/queen_of_hearts2.svg" },
+        ]
+
+        cards = []
+        //for share in shares {
+        for (i = 0; i < 5; i++) {
+            console.log(i)
+            card = Object.assign({}, shares[ Math.floor(Math.random() * shares.length) ]);
+            //card =
+            if (i < 2) { card.open = true; console.log("open") } else { card.open = false }
+            cards.push(card)
+        }
+/*
+        cards = [
+            shares[ Math.floor(Math.random() * shares.length) ],
+            shares[ Math.floor(Math.random() * shares.length) ],
+        ]
+*/
+/*
+        Alpine.store('shares', {
+            items: [
+                shares[ Math.floor(Math.random() * shares.length) ],
+                shares[ Math.floor(Math.random() * shares.length) ],
+                shares[ Math.floor(Math.random() * shares.length) ],
+                // shares[Math.floor(Math.random() * shares.length) ],
+                //{ "ticker": "AAPL", "name": "Apple", "margin": 66, "suit": "hearts" },
+                //{ "ticker": "MSFT", "name": "Microsoft", "margin": 32, "suit": "spades" },
+                //{ "ticker": "SBER", "name": "Сбербанк", "margin": 106, "suit": "diamonds" },
+            ]
+        })
+*/
+        console.log("Карт", cards.length)
+        console.log(cards)
+
+        Alpine.store('cards', { items: cards }) /*{
+            items: cards, [
+                shares[ Math.floor(Math.random() * shares.length) ],
+                shares[Math.floor(Math.random() * shares.length)],
+                { "ticker": "AAPL", "name": "Apple", "margin": 66, "suit": "hearts" },
+                { "ticker": "MSFT", "name": "Microsoft", "margin": 32, "suit": "spades" },
+                { "ticker": "SBER", "name": "Сбербанк", "margin": 106, "suit": "diamonds" },
+            ]
+        }*/
+        //)
+    }
+
+    function show() {
+
+    }
+    </script>
+</head>
+<body>
+
+    <!--<h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>-->
+    <!--<div x-data="{ shares: shares, cards: cards }">
+
+    <div x-data="{ count: 0 }">
+    <button x-on:click="count++">Increment</button>
+    <span x-text="count"></span>-->
+
+    <div x-data id="cards" class="grid grid-cols-7 gap-4 pt-20">
+
+      <div class="card col-span-1"></div>
+
+          <template x-for="card in $store.cards.items">
+              <div class="card col-span-1" >
+                <figure class="p-2 rounded-xl shadow-xl">
+                  <img :src="card.image" class="" :style="card.open ? 'visibility: visible' : 'visibility: hidden'" x-transition />
+                </figure>
+                <div class="card-body items-center text-center">
+                  <h1 class="card-title" x-text="card.ticker"></h1>
+                  <p x-text="card.name"></p>
+                  <h2><strong x-text="card.margin"></strong> %</h2>
+                </div>
+              </div>
+          </template>
+<!--
+    <div class="card col-span-1">
+        <figure class="p-2 rounded-xl shadow-xl">
+            <img src="cards/queen_of_hearts2.svg" class="rounded-xl" style="visibility: hidden" />
+        </figure>
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">???</h2>
+            <p><strong></strong>???</p>
+        </div>
+    </div>
+
+    <div class="card col-span-1 shadow-xl"></div>
+-->
+    <div class="card col-span-1"></div>
+
+
+        <!--<div class="card w-96 bg-base-100 shadow-xl">-->
+        <!--
+        <div class="card">
+          <figure class="px-0 pt-0">
+            <img src="cards/jack_of_hearts2.svg" alt="Shoes" class="rounded-xl" />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">AAPL</h2>
+            <p>+106%</p>
+          </div>
+        </div>
+
+        <div class="card col-span-1">
+          <figure class="px-0 pt-0">
+            <img src="cards/jack_of_hearts2.svg" alt="Shoes" class="rounded-xl" />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">AAPL</h2>
+            <p>+106%</p>
+          </div>
+        </div>
+
+        <div class="card col-span-1">
+
+          <figure class="px-0 pt-0">
+            <img src="cards/jack_of_hearts2.svg" alt="Shoes" class="rounded-xl" />
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title">AAPL</h2>
+            <p>+106%</p>
+          </div>
+
+        </div>
+      -->
+
+  </div> <!-- cards -->
+
+  <div class="card-actions">
+    <button class="btn btn-primary">Buy Now</button>
+  </div>
+
+</div>
+</body>
+</html>
